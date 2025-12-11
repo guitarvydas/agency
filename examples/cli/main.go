@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -24,7 +25,9 @@ func main() {
 
 	flag.Parse()
 
+	var content string
 	args := flag.Args()
+
 	if len(args) > 0 {
 		// Use positional argument if provided
 		content = args[0]
@@ -37,7 +40,6 @@ func main() {
 		}
 		content = string(bytes)
 	}
-	content := args[0]
 
 	result, err := provider.
 		TextToText(openai.TextToTextParams{
