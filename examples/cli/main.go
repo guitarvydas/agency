@@ -25,9 +25,17 @@ func main() {
 	flag.Parse()
 
 	args := flag.Args()
-	if len(args) < 1 {
-		fmt.Println("content argument is required")
-		os.Exit(1)
+	if len(args) > 0 {
+		// Use positional argument if provided
+		content = args[0]
+	} else {
+		// Read from stdin
+		bytes, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "error reading stdin: %v\n", err)
+			os.Exit(1)
+		}
+		content = string(bytes)
 	}
 	content := args[0]
 
